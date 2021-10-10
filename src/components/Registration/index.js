@@ -1,0 +1,1 @@
+export { Registation } from './Registration';
