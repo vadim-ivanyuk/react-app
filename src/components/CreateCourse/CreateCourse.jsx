@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import dayjs from 'dayjs';
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { addCourse } from '../../store/courses/courses.actions';
 
 import { useInput } from '../../hooks';
 
@@ -15,12 +17,14 @@ import { BackLink } from '../BackLink';
 
 import { AdditionalInfo, ColumnWrapper } from './CreateCourse.style';
 
-export const CreateCourse = ({ authors, setAuthors, courses, setCourses }) => {
+export const CreateCourse = () => {
 	const [courseAuthors, setCourseAuthors] = useState([]);
 	const title = useInput(true);
 	const description = useInput(true, 2);
 	const duration = useInput(true);
 	const history = useHistory();
+	const dispatch = useDispatch();
+	const authors = useSelector(({ authors }) => authors);
 
 	const createCourse = () => {
 		if (
@@ -29,17 +33,16 @@ export const CreateCourse = ({ authors, setAuthors, courses, setCourses }) => {
 			duration.getError() &&
 			courseAuthors.length
 		) {
-			setCourses([
-				...courses,
-				{
-					id: uuidv4(),
-					title: title.value,
-					description: description.value,
-					creationDate: dayjs().format('DD/MM/YYYY'),
-					duration: duration.value,
-					authors: courseAuthors,
-				},
-			]);
+			const newCourse = {
+				title: title.value,
+				description: description.value,
+				creationDate: dayjs().format('DD/MM/YYYY'),
+				duration: duration.value,
+				authors: courseAuthors,
+				id: uuidv4(),
+			};
+
+			dispatch(addCourse(newCourse));
 
 			history.push('/courses');
 		} else {
@@ -60,7 +63,7 @@ export const CreateCourse = ({ authors, setAuthors, courses, setCourses }) => {
 			/>
 			<AdditionalInfo>
 				<ColumnWrapper>
-					<CreateAuthor setAuthors={setAuthors} authors={authors} />
+					<CreateAuthor authors={authors} />
 					<Duration duration={duration} />
 				</ColumnWrapper>
 				<ColumnWrapper>
@@ -78,11 +81,4 @@ export const CreateCourse = ({ authors, setAuthors, courses, setCourses }) => {
 			</AdditionalInfo>
 		</>
 	);
-};
-
-CreateCourse.propTypes = {
-	authors: PropTypes.array.isRequired,
-	setAuthors: PropTypes.func.isRequired,
-	courses: PropTypes.array.isRequired,
-	setCourses: PropTypes.func.isRequired,
 };

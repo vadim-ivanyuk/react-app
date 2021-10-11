@@ -1,6 +1,8 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+
+import { addAuthor } from '../../../store/authors/authors.actions';
 
 import { Input } from '../../Input';
 import { Button } from '../../Button';
@@ -10,19 +12,20 @@ import { useInput } from '../../../hooks';
 import { CreateAuthorContainer } from './CreateAuthor.style';
 import { Title, InputLabel, Wrapper } from '../CreateCourse.style';
 
-export const CreateAuthor = ({ setAuthors, authors }) => {
+export const CreateAuthor = () => {
 	const authorName = useInput(true, 2);
+	const dispatch = useDispatch();
 
 	const createAuthor = () => {
-		let { value, reset } = authorName;
+		const { value, reset } = authorName;
 
 		if (authorName.getError()) {
-			setAuthors(
-				authors.concat({
-					id: uuidv4(),
-					name: value,
-				})
-			);
+			const newAuthor = {
+				name: value,
+				id: uuidv4(),
+			};
+
+			dispatch(addAuthor(newAuthor));
 
 			reset();
 		}
@@ -43,9 +46,4 @@ export const CreateAuthor = ({ setAuthors, authors }) => {
 			</Wrapper>
 		</CreateAuthorContainer>
 	);
-};
-
-CreateAuthor.propTypes = {
-	setAuthors: PropTypes.func.isRequired,
-	authors: PropTypes.array.isRequired,
 };

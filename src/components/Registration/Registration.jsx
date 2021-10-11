@@ -37,7 +37,7 @@ export const Registation = () => {
 					history.push('/login');
 				})
 				.catch((error) => {
-					alert(error);
+					alert(error.response.data.errors || error.response.data.result);
 				});
 		} else {
 			name.getError();

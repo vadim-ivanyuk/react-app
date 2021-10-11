@@ -1,6 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { logout } from '../../store/user/user.actions';
 
 import { Logo } from '../Logo';
 import { Button } from '../Button';
@@ -11,8 +14,10 @@ import { Wrapper, Container, UserMenu, Name } from './Header.style';
 
 export const Header = () => {
 	const history = useHistory();
+	const dispatch = useDispatch();
+	const user = useSelector(({ user }) => user);
 
-	const logout = () => {
+	const onLogout = () => {
 		axios
 			.delete(`${API_URL}/logout`, {
 				headers: {
@@ -20,12 +25,14 @@ export const Header = () => {
 				},
 			})
 			.then(() => {
+				dispatch(logout());
 				localStorage.removeItem('session_key');
+				localStorage.removeItem('user');
 
 				history.push('/login');
 			})
 			.catch((error) => {
-				alert(error);
+				alert(error.response.data.errors || error.response.data.result);
 			});
 	};
 
@@ -34,8 +41,12 @@ export const Header = () => {
 			<Container>
 				<Logo />
 				<UserMenu>
-					<Name>Vadym</Name>
-					<Button text={'Logout'} handleClick={logout} />
+					<Name>{user.name}</Name>
+					<Button
+						disabled={!user.token}
+						text={'Logout'}
+						handleClick={onLogout}
+					/>
 				</UserMenu>
 			</Container>
 		</Wrapper>

@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
+import { login } from '../../store/user/user.actions';
 
 import { Input } from '../Input';
 import { Button } from '../Button';
@@ -21,6 +24,7 @@ export const Login = () => {
 	const email = useInput(true);
 	const password = useInput(true);
 	const history = useHistory();
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		if (localStorage.getItem('session_key')) {
@@ -39,11 +43,14 @@ export const Login = () => {
 				})
 				.then(({ data }) => {
 					localStorage.setItem('session_key', data.result);
+					localStorage.setItem('user', JSON.stringify(data.user));
+
+					dispatch(login(data.user, data.result));
 
 					history.push('/courses');
 				})
 				.catch((error) => {
-					alert(error);
+					alert(error.response.data.errors || error.response.data.result);
 				});
 		} else {
 			email.getError();

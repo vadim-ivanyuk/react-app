@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
 	BrowserRouter as Router,
 	Switch,
@@ -6,6 +6,10 @@ import {
 	Redirect,
 } from 'react-router-dom';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+
+import { setCourses } from './store/courses/courses.actions';
+import { setAuthors } from './store/authors/authors.actions';
 
 import { Header } from './components/Header';
 import { Login } from './components/Login';
@@ -22,8 +26,7 @@ import { Wrapper, Container } from './App.style';
 const loggedIn = localStorage.getItem('session_key');
 
 function App() {
-	const [courses, setCourses] = useState([]);
-	const [authors, setAuthors] = useState([]);
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		axios
@@ -32,10 +35,13 @@ function App() {
 				axios.get(`${API_URL}/authors/all`),
 			])
 			.then((data) => {
-				setCourses(data[0].data.result);
-				setAuthors(data[1].data.result);
+				dispatch(setCourses(data[0].data.result));
+				dispatch(setAuthors(data[1].data.result));
+			})
+			.catch((error) => {
+				alert(error.response.data.errors || error.response.data.result);
 			});
-	}, []);
+	}, [dispatch]);
 
 	return (
 		<Router>
@@ -48,30 +54,9 @@ function App() {
 						</Route>
 						<Route exact path='/login' component={Login} />
 						<Route exact path='/registration' component={Registation} />
-						<Route
-							exact
-							path='/courses'
-							component={() => <Courses courses={courses} authors={authors} />}
-						/>
-						<Route
-							exact
-							path='/courses/add'
-							component={() => (
-								<CreateCourse
-									courses={courses}
-									setCourses={setCourses}
-									authors={authors}
-									setAuthors={setAuthors}
-								/>
-							)}
-						/>
-						<Route
-							exact
-							path='/courses/:id'
-							component={() => (
-								<CourseInfo courses={courses} authors={authors} />
-							)}
-						/>
+						<Route exact path='/courses' component={Courses} />
+						<Route exact path='/courses/add' component={CreateCourse} />
+						<Route exact path='/courses/:id' component={CourseInfo} />
 					</Switch>
 				</Container>
 			</Wrapper>

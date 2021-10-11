@@ -70,10 +70,15 @@ export const Created = styled.p`
 	text-align: justify;
 `;
 
-export const ShowCourse = styled.div`
+export const Buttons = styled.div`
 	width: 100%;
 	height: 50px;
 	display: flex;
-	justify-content: center;
+	justify-content: space-around;
 	align-items: center;
+
+	@media (max-width: 400px) {
+		flex-direction: column;
+		height: 100px;
+	}
 `;

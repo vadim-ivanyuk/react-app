@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouteMatch } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 import { BackLink } from '../BackLink';
 
@@ -15,10 +15,12 @@ import {
 	AdditionalInfo,
 } from './CourseInfo.style';
 
-export const CourseInfo = ({ courses, authors }) => {
+export const CourseInfo = () => {
 	const [course, setCourse] = useState(null);
 	const [courseAuthors, setCourseAuthors] = useState(null);
 	const { params } = useRouteMatch();
+	const courses = useSelector(({ courses }) => courses);
+	const authors = useSelector(({ authors }) => authors);
 
 	useEffect(() => {
 		courses.forEach((course) => {
@@ -59,9 +61,4 @@ export const CourseInfo = ({ courses, authors }) => {
 			)}
 		</>
 	);
-};
-
-CourseInfo.propTypes = {
-	courses: PropTypes.array.isRequired,
-	authors: PropTypes.array.isRequired,
 };

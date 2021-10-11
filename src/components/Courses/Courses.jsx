@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 import { Navbar } from '../Navbar';
 import { CoursesList } from './CoursesList';
@@ -24,9 +24,10 @@ const filterCourses = (searchQueries, courses) => {
 	}, []);
 };
 
-export const Courses = ({ courses, authors }) => {
+export const Courses = () => {
 	const [filteredCourses, setFilteredCourses] = useState([]);
 	const [searchQueries, setSearchQueries] = useState('');
+	const courses = useSelector(({ courses }) => courses);
 
 	useEffect(() => {
 		setFilteredCourses(filterCourses(searchQueries, courses));
@@ -35,12 +36,7 @@ export const Courses = ({ courses, authors }) => {
 	return (
 		<>
 			<Navbar setSearchQueries={setSearchQueries} />
-			<CoursesList filteredCourses={filteredCourses} authors={authors} />
+			<CoursesList filteredCourses={filteredCourses} />
 		</>
 	);
-};
-
-Courses.propTypes = {
-	courses: PropTypes.array.isRequired,
-	authors: PropTypes.array.isRequired,
 };
