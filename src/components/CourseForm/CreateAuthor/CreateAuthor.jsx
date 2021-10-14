@@ -1,8 +1,7 @@
 import React from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import { useDispatch } from 'react-redux';
 
-import { addAuthor } from '../../../store/authors/authors.actions';
+import { addAuthor } from '../../../store/authors/authors.thunks';
 
 import { Input } from '../../Input';
 import { Button } from '../../Button';
@@ -10,7 +9,7 @@ import { Button } from '../../Button';
 import { useInput } from '../../../hooks';
 
 import { CreateAuthorContainer } from './CreateAuthor.style';
-import { Title, InputLabel, Wrapper } from '../CreateCourse.style';
+import { Title, InputLabel, Wrapper } from '../CourseForm.style';
 
 export const CreateAuthor = () => {
 	const authorName = useInput(true, 2);
@@ -22,7 +21,6 @@ export const CreateAuthor = () => {
 		if (authorName.getError()) {
 			const newAuthor = {
 				name: value,
-				id: uuidv4(),
 			};
 
 			dispatch(addAuthor(newAuthor));

@@ -1,17 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 import { Button } from '../../Button';
 import { getAuthorsNamesById } from '../../../helpers';
 
 import { CourseAuthors, Error } from './CourseAuthorsList.style';
-import { Title, Wrapper } from '../CreateCourse.style';
+import { Title, Wrapper } from '../CourseForm.style';
 
-export const CourseAuthorsList = ({
-	courseAuthors,
-	setCourseAuthors,
-	authors,
-}) => {
+export const CourseAuthorsList = ({ setCourseAuthors, courseAuthors }) => {
+	const authors = useSelector(({ authors }) => authors);
+
 	const deleteCourseAuthor = (authorId) => () => {
 		setCourseAuthors(() =>
 			courseAuthors.filter((author) => author !== authorId)
@@ -39,7 +38,6 @@ export const CourseAuthorsList = ({
 };
 
 CourseAuthorsList.propTypes = {
-	courseAuthors: PropTypes.array.isRequired,
 	setCourseAuthors: PropTypes.func.isRequired,
-	authors: PropTypes.array.isRequired,
+	courseAuthors: PropTypes.array.isRequired,
 };

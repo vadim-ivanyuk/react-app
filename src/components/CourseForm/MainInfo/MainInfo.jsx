@@ -5,9 +5,9 @@ import { Input } from '../../Input';
 import { Button } from '../../Button';
 
 import { MainInfoContainer, Textarea, Error } from './MainInfo.style';
-import { Wrapper, InputLabel } from '../CreateCourse.style';
+import { Wrapper, InputLabel } from '../CourseForm.style';
 
-export const MainInfo = ({ title, description, createCourse }) => {
+export const MainInfo = ({ title, description, onSubmit, courseId }) => {
 	return (
 		<MainInfoContainer>
 			<Wrapper>
@@ -20,7 +20,10 @@ export const MainInfo = ({ title, description, createCourse }) => {
 						input={title}
 					/>
 				</div>
-				<Button text='Create course' handleClick={createCourse} />
+				<Button
+					text={courseId ? 'Update course' : 'Create course'}
+					handleClick={onSubmit}
+				/>
 			</Wrapper>
 			<InputLabel htmlFor='description'>Description</InputLabel>
 			<Textarea
@@ -37,5 +40,6 @@ export const MainInfo = ({ title, description, createCourse }) => {
 MainInfo.propTypes = {
 	title: PropTypes.object.isRequired,
 	description: PropTypes.object.isRequired,
-	createCourse: PropTypes.func.isRequired,
+	onSubmit: PropTypes.func.isRequired,
+	courseId: PropTypes.string,
 };

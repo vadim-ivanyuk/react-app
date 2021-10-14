@@ -4,8 +4,12 @@ import { useSelector } from 'react-redux';
 
 import { BackLink } from '../BackLink';
 
-import { convertDuration } from '../../helpers';
-import { getAuthorsNamesById } from '../../helpers';
+import {
+	convertDuration,
+	handleError,
+	myCustomAxios,
+	getAuthorsNamesById,
+} from '../../helpers';
 
 import {
 	TitleWrapper,
@@ -17,19 +21,20 @@ import {
 
 export const CourseInfo = () => {
 	const [course, setCourse] = useState(null);
-	const [courseAuthors, setCourseAuthors] = useState(null);
+	const authors = useSelector((store) => store.authors);
 	const { params } = useRouteMatch();
-	const courses = useSelector(({ courses }) => courses);
-	const authors = useSelector(({ authors }) => authors);
+	const { id } = params;
 
 	useEffect(() => {
-		courses.forEach((course) => {
-			if (course.id === params.id) {
-				setCourse(course);
-				setCourseAuthors(getAuthorsNamesById(course.authors, authors));
-			}
-		});
-	}, [authors, courses, params.id]);
+		myCustomAxios
+			.get(`/courses/${id}`, { id })
+			.then(({ data }) => {
+				setCourse(data.result);
+			})
+			.catch((error) => {
+				handleError(error);
+			});
+	}, [id]);
 
 	return (
 		<>
@@ -53,7 +58,7 @@ export const CourseInfo = () => {
 							</p>
 							<p>
 								<strong>Authors: </strong>
-								{courseAuthors && courseAuthors.join(', ')}
+								{getAuthorsNamesById(course.authors, authors).join(', ')}
 							</p>
 						</AdditionalInfo>
 					</Info>

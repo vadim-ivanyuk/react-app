@@ -2,24 +2,22 @@ import React, { useEffect } from 'react';
 import {
 	BrowserRouter as Router,
 	Switch,
-	Route,
 	Redirect,
+	Route,
 } from 'react-router-dom';
-import axios from 'axios';
 import { useDispatch } from 'react-redux';
 
-import { setCourses } from './store/courses/courses.actions';
-import { setAuthors } from './store/authors/authors.actions';
+import { getCourses } from './store/courses/courses.thunks';
+import { getAuthors } from './store/authors/authors.thunks';
 
+import { PrivateRoute } from './components/PrivateRoute';
 import { Header } from './components/Header';
 import { Login } from './components/Login';
 import { Registation } from './components/Registration';
 import { Courses } from './components/Courses';
 import { CourseInfo } from './components/CourseInfo';
-import { CreateCourse } from './components/CreateCourse';
+import { CourseForm } from './components/CourseForm';
 import { Footer } from './components/Footer';
-
-import { API_URL } from './utils/apies';
 
 import { Wrapper, Container } from './App.style';
 
@@ -29,18 +27,8 @@ function App() {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		axios
-			.all([
-				axios.get(`${API_URL}/courses/all`),
-				axios.get(`${API_URL}/authors/all`),
-			])
-			.then((data) => {
-				dispatch(setCourses(data[0].data.result));
-				dispatch(setAuthors(data[1].data.result));
-			})
-			.catch((error) => {
-				alert(error.response.data.errors || error.response.data.result);
-			});
+		dispatch(getCourses());
+		dispatch(getAuthors());
 	}, [dispatch]);
 
 	return (
@@ -55,8 +43,13 @@ function App() {
 						<Route exact path='/login' component={Login} />
 						<Route exact path='/registration' component={Registation} />
 						<Route exact path='/courses' component={Courses} />
-						<Route exact path='/courses/add' component={CreateCourse} />
+						<PrivateRoute exact path='/courses/add' component={CourseForm} />
 						<Route exact path='/courses/:id' component={CourseInfo} />
+						<PrivateRoute
+							exact
+							path='/courses/update/:id'
+							component={CourseForm}
+						/>
 					</Switch>
 				</Container>
 			</Wrapper>

@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
-import dayjs from 'dayjs';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { addCourse } from '../../store/courses/courses.actions';
+import { addCourse, updateCourse } from '../../store/courses/courses.thunks';
 
 import { useInput } from '../../hooks';
 
@@ -15,36 +13,51 @@ import { Duration } from './Duration';
 import { CourseAuthorsList } from './CourseAuthorsList';
 import { BackLink } from '../BackLink';
 
-import { AdditionalInfo, ColumnWrapper } from './CreateCourse.style';
+import { AdditionalInfo, ColumnWrapper } from './CourseForm.style';
+import { myCustomAxios } from '../../helpers';
 
-export const CreateCourse = () => {
+export const CourseForm = ({ match }) => {
 	const [courseAuthors, setCourseAuthors] = useState([]);
 	const title = useInput(true);
 	const description = useInput(true, 2);
 	const duration = useInput(true);
 	const history = useHistory();
 	const dispatch = useDispatch();
-	const authors = useSelector(({ authors }) => authors);
+	const courseId = match.params.id;
 
-	const createCourse = () => {
+	useEffect(() => {
+		if (courseId) {
+			myCustomAxios.get(`/courses/${courseId}`).then(({ data }) => {
+				const { result } = data;
+
+				title.setValue(result.title);
+				description.setValue(result.description);
+				duration.setValue(result.duration);
+				setCourseAuthors(result.authors);
+			});
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [courseId]);
+
+	const onSubmit = () => {
 		if (
 			title.getError() &&
 			description.getError() &&
 			duration.getError() &&
 			courseAuthors.length
 		) {
-			const newCourse = {
+			const course = {
 				title: title.value,
 				description: description.value,
-				creationDate: dayjs().format('DD/MM/YYYY'),
-				duration: duration.value,
+				duration: duration.value++,
 				authors: courseAuthors,
-				id: uuidv4(),
 			};
 
-			dispatch(addCourse(newCourse));
-
-			history.push('/courses');
+			if (courseId) {
+				dispatch(updateCourse(courseId, course, history));
+			} else {
+				dispatch(addCourse(course, history));
+			}
 		} else {
 			title.getError();
 			description.getError();
@@ -59,23 +72,22 @@ export const CreateCourse = () => {
 			<MainInfo
 				title={title}
 				description={description}
-				createCourse={createCourse}
+				onSubmit={onSubmit}
+				courseId={courseId}
 			/>
 			<AdditionalInfo>
 				<ColumnWrapper>
-					<CreateAuthor authors={authors} />
+					<CreateAuthor />
 					<Duration duration={duration} />
 				</ColumnWrapper>
 				<ColumnWrapper>
 					<AuthorsList
-						authors={authors}
 						setCourseAuthors={setCourseAuthors}
 						courseAuthors={courseAuthors}
 					/>
 					<CourseAuthorsList
-						courseAuthors={courseAuthors}
 						setCourseAuthors={setCourseAuthors}
-						authors={authors}
+						courseAuthors={courseAuthors}
 					/>
 				</ColumnWrapper>
 			</AdditionalInfo>

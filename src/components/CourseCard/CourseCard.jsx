@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { deleteCourse } from '../../store/courses/courses.actions';
+import { deleteCourse } from '../../store/courses/courses.thunks';
 
 import { Button } from '../Button';
 
@@ -22,13 +22,15 @@ import {
 } from './CourseCard.style';
 
 export const CourseCard = ({ course }) => {
-	const authors = useSelector(({ authors }) => authors);
+	const { authors, user } = useSelector((store) => store);
 	const dispatch = useDispatch();
 	const courseAuthors = getAuthorsNamesById(course.authors, authors);
 	const courseDuration = convertDuration(course.duration);
 
 	const handleDelete = () => {
-		dispatch(deleteCourse(course.id));
+		if (window.confirm('Do you really want delete this item ?')) {
+			dispatch(deleteCourse(course.id));
+		}
 	};
 
 	return (
@@ -54,8 +56,14 @@ export const CourseCard = ({ course }) => {
 					<Link to={`/courses/${course.id}`}>
 						<Button text={'Show course'} />
 					</Link>
-					<Button text='Update' />
-					<Button text='Delete' handleClick={handleDelete} />
+					{user.role === 'admin' && (
+						<>
+							<Link to={`/courses/update/${course.id}`}>
+								<Button text='Update' />
+							</Link>
+							<Button text='Delete' handleClick={handleDelete} />
+						</>
+					)}
 				</Buttons>
 			</AdditionalInfo>
 		</Wrapper>

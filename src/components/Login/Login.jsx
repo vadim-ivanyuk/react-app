@@ -1,14 +1,12 @@
 import React, { useEffect } from 'react';
-import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import { login } from '../../store/user/user.actions';
+import { login } from '../../store/user/user.thunks';
 
 import { Input } from '../Input';
 import { Button } from '../Button';
 
-import { API_URL } from '../../utils/apies';
 import { useInput } from '../../hooks';
 
 import {
@@ -36,22 +34,7 @@ export const Login = () => {
 		e.preventDefault();
 
 		if (email.getError() && password.getError()) {
-			axios
-				.post(`${API_URL}/login`, {
-					email: email.value,
-					password: password.value,
-				})
-				.then(({ data }) => {
-					localStorage.setItem('session_key', data.result);
-					localStorage.setItem('user', JSON.stringify(data.user));
-
-					dispatch(login(data.user, data.result));
-
-					history.push('/courses');
-				})
-				.catch((error) => {
-					alert(error.response.data.errors || error.response.data.result);
-				});
+			dispatch(login(email.value, password.value, history));
 		} else {
 			email.getError();
 			password.getError();

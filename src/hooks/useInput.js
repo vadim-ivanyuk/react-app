@@ -36,6 +36,7 @@ export const useInput = (required = false, minLength = 0, initial = '') => {
 		reset: () => {
 			setValue('');
 		},
+		setValue,
 		error,
 	};
 };

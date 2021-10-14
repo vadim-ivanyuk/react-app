@@ -4,12 +4,14 @@ const initialState = [];
 
 export const coursesReducer = (state = initialState, { type, payload }) => {
 	switch (type) {
-		case types.SET_COURSES:
-			return [...payload.course];
+		case types.GET_COURSES:
+			return [...payload.courses];
 		case types.ADD_COURSE:
 			return [...state, payload.course];
+		case types.UPDATE_COURSE:
+			return [...payload.courses];
 		case types.DELETE_COURSE:
-			return state.filter((course) => course.id !== payload.courseId);
+			return [...payload.courses];
 		default:
 			return state;
 	}

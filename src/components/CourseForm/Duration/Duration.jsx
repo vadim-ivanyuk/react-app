@@ -6,7 +6,7 @@ import { Input } from '../../Input';
 import { convertDuration } from '../../../helpers';
 
 import { DurationContainer, CourseDuration } from './Duration.style';
-import { Title, InputLabel } from '../CreateCourse.style';
+import { Title, InputLabel } from '../CourseForm.style';
 
 export const Duration = ({ duration }) => {
 	return (
