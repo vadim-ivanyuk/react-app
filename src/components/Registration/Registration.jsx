@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import axios from 'axios';
+import { useDispatch } from 'react-redux';
+
+import { registration } from '../../store/user/user.thunks';
 
 import { Input } from '../Input';
 import { Button } from '../Button';
 
 import { useInput } from '../../hooks';
-import { API_URL } from '../../utils/apies';
 
 import {
 	Wrapper,
@@ -22,23 +23,13 @@ export const Registation = () => {
 	const email = useInput(true);
 	const password = useInput(true);
 	const history = useHistory();
+	const dispatch = useDispatch();
 
 	const registrationUser = (e) => {
 		e.preventDefault();
 
 		if (name.getError() && email.getError() && password.getError()) {
-			axios
-				.post(`${API_URL}/register`, {
-					name: name.value,
-					email: email.value,
-					password: password.value,
-				})
-				.then(() => {
-					history.push('/login');
-				})
-				.catch((error) => {
-					alert(error.response.data.errors || error.response.data.result);
-				});
+			dispatch(registration(name.value, email.value, password.value, history));
 		} else {
 			name.getError();
 			email.getError();

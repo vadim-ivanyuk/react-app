@@ -37,6 +37,17 @@ export const login = (email, password, history) => {
 	};
 };
 
+export const registration = (name, email, password, history) => (dispatch) => {
+	myCustomAxios
+		.post('/register', { name, email, password })
+		.then(() => {
+			history.push('/login');
+		})
+		.catch((error) => {
+			handleError(error);
+		});
+};
+
 export const logout = (history) => {
 	return (dispatch) => {
 		myCustomAxios
