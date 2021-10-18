@@ -1,2 +1,13 @@
-export const convertDuration = (duration) =>
-	`${new Date(duration * 1000).toISOString().substr(14, 5)} hours`;
+export const convertDuration = (duration = 0) => {
+	let hours = Math.trunc(duration / 60);
+	let minutes = duration % 60;
+
+	if (hours < 10) {
+		hours = `0${hours}`;
+	}
+	if (minutes < 10) {
+		minutes = `0${minutes}`;
+	}
+
+	return `${hours}:${minutes} hours`;
+};

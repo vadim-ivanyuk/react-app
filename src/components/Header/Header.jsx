@@ -22,14 +22,16 @@ export const Header = () => {
 		<Wrapper>
 			<Container>
 				<Logo />
-				<UserMenu>
-					<Name>{user.name}</Name>
-					<Button
-						disabled={!user.token}
-						text={'Logout'}
-						handleClick={onLogout}
-					/>
-				</UserMenu>
+				{user.isAuth && (
+					<UserMenu>
+						<Name>{user.name}</Name>
+						<Button
+							disabled={!user.token}
+							text={'Logout'}
+							handleClick={onLogout}
+						/>
+					</UserMenu>
+				)}
 			</Container>
 		</Wrapper>
 	);

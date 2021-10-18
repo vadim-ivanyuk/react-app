@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { CourseCard } from '../../CourseCard';
 
@@ -9,3 +10,16 @@ export const CoursesList = ({ filteredCourses }) => (
 		})}
 	</>
 );
+
+CoursesList.propTypes = {
+	filteredCourses: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.string.isRequired,
+			title: PropTypes.string.isRequired,
+			description: PropTypes.string.isRequired,
+			creationDate: PropTypes.string.isRequired,
+			duration: PropTypes.number.isRequired,
+			authors: PropTypes.array.isRequired,
+		})
+	),
+};

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
@@ -24,6 +24,12 @@ export const Registation = () => {
 	const password = useInput(true);
 	const history = useHistory();
 	const dispatch = useDispatch();
+
+	useEffect(() => {
+		if (localStorage.getItem('session_key')) {
+			history.push('/courses');
+		}
+	}, [history]);
 
 	const registrationUser = (e) => {
 		e.preventDefault();

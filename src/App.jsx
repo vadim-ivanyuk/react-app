@@ -1,14 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
 	BrowserRouter as Router,
 	Switch,
 	Redirect,
 	Route,
 } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-
-import { getCourses } from './store/courses/courses.thunks';
-import { getAuthors } from './store/authors/authors.thunks';
 
 import { PrivateRoute } from './components/PrivateRoute';
 import { Header } from './components/Header';
@@ -24,13 +20,6 @@ import { Wrapper, Container } from './App.style';
 const loggedIn = localStorage.getItem('session_key');
 
 function App() {
-	const dispatch = useDispatch();
-
-	useEffect(() => {
-		dispatch(getCourses());
-		dispatch(getAuthors());
-	}, [dispatch]);
-
 	return (
 		<Router>
 			<Header />
