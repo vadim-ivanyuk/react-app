@@ -7,12 +7,12 @@ const validator = (value, minLength) => {
 		return 'Length should be at least 2 characters';
 	} else if (value < 1) {
 		return 'Duration should be more than 0 minute';
-	} else return null;
+	} else return '';
 };
 
 export const useInput = (required = false, minLength = 0, initial = '') => {
 	const [value, setValue] = useState(initial);
-	const [error, setError] = useState(null);
+	const [error, setError] = useState('');
 
 	const validateInput = (value) => {
 		setError(validator(value, minLength));

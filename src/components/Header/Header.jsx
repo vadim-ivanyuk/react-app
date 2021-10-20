@@ -24,7 +24,7 @@ export const Header = () => {
 				<Logo />
 				{user.isAuth && (
 					<UserMenu>
-						<Name>{user.name}</Name>
+						<Name data-testid='name'>{user.name}</Name>
 						<Button
 							disabled={!user.token}
 							text={'Logout'}

@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 
 import { CourseCard } from '../../CourseCard';
 
-export const CoursesList = ({ courses }) => (
-	<>
+export const CoursesList = ({ courses = [] }) => (
+	<div>
 		{courses.map((course) => {
 			return <CourseCard key={course.id} course={course} />;
 		})}
-	</>
+	</div>
 );
 
 CoursesList.propTypes = {

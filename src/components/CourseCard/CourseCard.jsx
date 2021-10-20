@@ -34,24 +34,19 @@ export const CourseCard = ({ course }) => {
 	};
 
 	return (
-		<Wrapper>
+		<Wrapper data-testid='courseCard'>
 			<MainInfo>
-				<Title>{course.title}</Title>
-				<Description>{course.description}</Description>
+				<Title data-testid='title'>{course.title}</Title>
+				<Description data-testid='description'>
+					{course.description}
+				</Description>
 			</MainInfo>
 			<AdditionalInfo>
-				<Authors>
-					<strong>Authors: </strong>
-					{courseAuthors.join(', ')}
+				<Authors data-testid='authors'>
+					Authors: {courseAuthors.join(', ')}
 				</Authors>
-				<Duration>
-					<strong>Duration: </strong>
-					{courseDuration}
-				</Duration>
-				<Created>
-					<strong>Created: </strong>
-					{course.creationDate}
-				</Created>
+				<Duration data-testid='duration'>Duration: {courseDuration}</Duration>
+				<Created data-testid='created'>Created: {course.creationDate}</Created>
 				<Buttons>
 					<Link to={`/courses/${course.id}`}>
 						<Button text={'Show course'} />

@@ -4,7 +4,7 @@ import { LogoText } from './Logo.style';
 
 export const Logo = () => {
 	return (
-		<LogoText>
+		<LogoText data-testid='logo'>
 			React <span>App</span>
 		</LogoText>
 	);

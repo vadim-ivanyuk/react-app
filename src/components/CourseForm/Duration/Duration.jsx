@@ -28,8 +28,8 @@ export const Duration = ({ duration }) => {
 
 Duration.propTypes = {
 	duration: PropTypes.shape({
-		error: PropTypes.object || PropTypes.string,
-		value: PropTypes.number.isRequired,
+		error: PropTypes.string.isRequired,
+		value: PropTypes.string.isRequired,
 		getError: PropTypes.func.isRequired,
 		onBlur: PropTypes.func.isRequired,
 		onChange: PropTypes.func.isRequired,
