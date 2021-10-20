@@ -33,10 +33,10 @@ function App() {
 						<Route exact path='/registration' component={Registation} />
 						<Route exact path='/courses' component={Courses} />
 						<PrivateRoute exact path='/courses/add' component={CourseForm} />
-						<Route exact path='/courses/:id' component={CourseInfo} />
+						<Route exact path='/courses/:courseId' component={CourseInfo} />
 						<PrivateRoute
 							exact
-							path='/courses/update/:id'
+							path='/courses/update/:courseId'
 							component={CourseForm}
 						/>
 					</Switch>

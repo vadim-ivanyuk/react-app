@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 
 import { CourseCard } from '../../CourseCard';
 
-export const CoursesList = ({ filteredCourses }) => (
+export const CoursesList = ({ courses }) => (
 	<>
-		{filteredCourses.map((course) => {
+		{courses.map((course) => {
 			return <CourseCard key={course.id} course={course} />;
 		})}
 	</>
 );
 
 CoursesList.propTypes = {
-	filteredCourses: PropTypes.arrayOf(
+	courses: PropTypes.arrayOf(
 		PropTypes.shape({
 			id: PropTypes.string.isRequired,
 			title: PropTypes.string.isRequired,

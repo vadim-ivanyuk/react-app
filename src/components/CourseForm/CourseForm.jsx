@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import { addCourse, updateCourse } from '../../store/courses/courses.thunks';
@@ -16,14 +16,14 @@ import { BackLink } from '../BackLink';
 import { AdditionalInfo, ColumnWrapper } from './CourseForm.style';
 import { myCustomAxios } from '../../helpers';
 
-export const CourseForm = ({ match }) => {
+export const CourseForm = () => {
 	const [courseAuthors, setCourseAuthors] = useState([]);
 	const title = useInput(true);
 	const description = useInput(true, 2);
 	const duration = useInput(true);
 	const history = useHistory();
 	const dispatch = useDispatch();
-	const courseId = match.params.id;
+	const { courseId } = useParams();
 
 	useEffect(() => {
 		if (courseId) {

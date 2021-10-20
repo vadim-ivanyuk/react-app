@@ -18,6 +18,22 @@ export const getCourses = () => (dispatch) => {
 		});
 };
 
+export const getFilteredCourses = (title) => (dispatch) => {
+	myCustomAxios
+		.get(`/courses/filter?title=${title}`)
+		.then(({ data }) => {
+			dispatch({
+				type: types.GET_COURSES,
+				payload: {
+					courses: data.result,
+				},
+			});
+		})
+		.catch((error) => {
+			handleError(error);
+		});
+};
+
 export const addCourse = (course, history) => (dispatch) => {
 	myCustomAxios
 		.post('/courses/add', course)

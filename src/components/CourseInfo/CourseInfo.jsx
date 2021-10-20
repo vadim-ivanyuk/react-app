@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useRouteMatch } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import { BackLink } from '../BackLink';
@@ -22,19 +22,18 @@ import {
 export const CourseInfo = () => {
 	const [course, setCourse] = useState(null);
 	const authors = useSelector((store) => store.authors);
-	const { params } = useRouteMatch();
-	const { id } = params;
+	const { courseId } = useParams();
 
 	useEffect(() => {
 		myCustomAxios
-			.get(`/courses/${id}`, { id })
+			.get(`/courses/${courseId}`, { courseId })
 			.then(({ data }) => {
 				setCourse(data.result);
 			})
 			.catch((error) => {
 				handleError(error);
 			});
-	}, [id]);
+	}, [courseId]);
 
 	return (
 		<>
