@@ -71,5 +71,12 @@ export const CourseCard = ({ course }) => {
 };
 
 CourseCard.propTypes = {
-	course: PropTypes.object.isRequired,
+	course: PropTypes.shape({
+		id: PropTypes.string.isRequired,
+		title: PropTypes.string.isRequired,
+		description: PropTypes.string.isRequired,
+		creationDate: PropTypes.string.isRequired,
+		duration: PropTypes.number.isRequired,
+		authors: PropTypes.array.isRequired,
+	}),
 };
