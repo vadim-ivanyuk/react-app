@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
+import { getCourses } from '../../store/courses/courses.thunks';
 import { getAuthors } from '../../store/authors/authors.thunks';
 
 import { Navbar } from '../Navbar';
@@ -17,6 +18,7 @@ export const Courses = () => {
 			history.push('/login');
 		}
 
+		dispatch(getCourses());
 		dispatch(getAuthors());
 	}, [dispatch, history]);
 

@@ -23,7 +23,7 @@ export const getFilteredCourses = (title) => (dispatch) => {
 		.get(`/courses/filter?title=${title}`)
 		.then(({ data }) => {
 			dispatch({
-				type: types.GET_COURSES,
+				type: types.GET_FILTERED_COURSES,
 				payload: {
 					courses: data.result,
 				},

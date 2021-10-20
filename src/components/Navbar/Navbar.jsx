@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -16,14 +16,17 @@ import { Wrapper, Search } from './Navbar.style';
 
 export const Navbar = () => {
 	const role = useSelector(({ user }) => user.role);
+	const isFirstRender = useRef(true);
 	const searchInput = useInput();
 	const { value } = searchInput;
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		if (!value) {
+		if (!value && !isFirstRender.current) {
 			dispatch(getCourses());
 		}
+
+		isFirstRender.current = false;
 	}, [value, dispatch]);
 
 	const search = (e) => {
