@@ -22,10 +22,10 @@ export const CourseAuthorsList = ({ setCourseAuthors, courseAuthors }) => {
 			<Title>Course authors</Title>
 			{courseAuthors.length ? (
 				courseAuthors.map((authorId) => (
-					<Wrapper key={authorId}>
+					<Wrapper data-testid='courseAuthor' key={authorId}>
 						<p>{getAuthorsNamesById(authorId, authors)}</p>
 						<Button
-							text='Delete author'
+							text='Delete course author'
 							handleClick={deleteCourseAuthor(authorId)}
 						/>
 					</Wrapper>

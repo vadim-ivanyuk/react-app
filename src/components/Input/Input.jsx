@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Inp, Error } from './Input.style';
 
-export const Input = ({ type, placeholder, name, input }) => {
+export const Input = ({ type, placeholder, name, input, dataTestid }) => {
 	const { error } = input;
 	return (
 		<>
@@ -13,6 +13,7 @@ export const Input = ({ type, placeholder, name, input }) => {
 				name={name}
 				{...input}
 				id={name}
+				data-testid={dataTestid}
 			/>
 			{error && <Error>{error}</Error>}
 		</>

@@ -46,7 +46,7 @@ export const Navbar = () => {
 				/>
 				<Button text='Search' handleClick={search} />
 			</Search>
-			<Link to='/courses/add'>
+			<Link data-testid='addNewCourse' to='/courses/add'>
 				{role === 'admin' && <Button text='Add new course' />}
 			</Link>
 		</Wrapper>

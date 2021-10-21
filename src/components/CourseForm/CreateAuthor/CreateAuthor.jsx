@@ -38,6 +38,7 @@ export const CreateAuthor = () => {
 				placeholder='Enter author name'
 				name='authorName'
 				input={authorName}
+				dataTestid='authorName'
 			/>
 			<Wrapper center>
 				<Button text='Create Author' handleClick={createAuthor} />

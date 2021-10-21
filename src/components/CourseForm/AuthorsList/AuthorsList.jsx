@@ -30,11 +30,11 @@ export const AuthorsList = ({ setCourseAuthors, courseAuthors }) => {
 	);
 
 	return (
-		<Authors>
+		<Authors data-testid='authorsList'>
 			<Title>Authors</Title>
 			{availableAuthors.map((author) => {
 				return (
-					<Wrapper key={author.id}>
+					<Wrapper data-testid='author' key={author.id}>
 						<p>{author.name}</p>
 						<div>
 							<Button

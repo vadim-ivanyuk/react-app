@@ -4,7 +4,12 @@ import PropTypes from 'prop-types';
 import { Btn } from './Button.style';
 
 export const Button = ({ text, handleClick, disabled }) => (
-	<Btn data-testid='button' disabled={disabled} onClick={handleClick}>
+	<Btn
+		role='button'
+		data-testid='button'
+		disabled={disabled}
+		onClick={handleClick}
+	>
 		{text}
 	</Btn>
 );

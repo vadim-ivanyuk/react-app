@@ -32,7 +32,7 @@ export const CourseForm = () => {
 
 				title.setValue(result.title);
 				description.setValue(result.description);
-				duration.setValue(result.duration);
+				duration.setValue(String(result.duration));
 				setCourseAuthors(result.authors);
 			});
 		}
@@ -67,7 +67,7 @@ export const CourseForm = () => {
 	};
 
 	return (
-		<>
+		<div data-testid='courseForm'>
 			<BackLink to='/courses' text='< Back to courses' />
 			<MainInfo
 				title={title}
@@ -91,6 +91,6 @@ export const CourseForm = () => {
 					/>
 				</ColumnWrapper>
 			</AdditionalInfo>
-		</>
+		</div>
 	);
 };
