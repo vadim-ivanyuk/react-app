@@ -20,7 +20,7 @@ export const CourseForm = () => {
 	const [courseAuthors, setCourseAuthors] = useState([]);
 	const title = useInput(true);
 	const description = useInput(true, 2);
-	const duration = useInput(true, 0, 0);
+	const duration = useInput(true);
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const { courseId } = useParams();
@@ -32,7 +32,7 @@ export const CourseForm = () => {
 
 				title.setValue(result.title);
 				description.setValue(result.description);
-				duration.setValue(result.duration);
+				duration.setValue(String(result.duration));
 				setCourseAuthors(result.authors);
 			});
 		}
