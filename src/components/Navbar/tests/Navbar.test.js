@@ -1,5 +1,4 @@
 import React from 'react';
-import 'regenerator-runtime/runtime';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import '@testing-library/jest-dom/extend-expect';
