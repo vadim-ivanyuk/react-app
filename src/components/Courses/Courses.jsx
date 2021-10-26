@@ -4,13 +4,14 @@ import { useHistory } from 'react-router';
 
 import { getCourses } from '../../store/courses/courses.thunks';
 import { getAuthors } from '../../store/authors/authors.thunks';
+import { useCourses } from '../../store/selectors';
 
 import { Navbar } from '../Navbar';
 import { CoursesList } from './CoursesList';
 
 export const Courses = () => {
 	const history = useHistory();
-	const courses = useSelector(({ courses }) => courses);
+	const courses = useSelector(useCourses);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
