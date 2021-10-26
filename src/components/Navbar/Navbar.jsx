@@ -6,6 +6,7 @@ import {
 	getCourses,
 	getFilteredCourses,
 } from '../../store/courses/courses.thunks';
+import { useUser } from '../../store/selectors';
 
 import { Button } from '../Button';
 import { Input } from '../Input';
@@ -15,7 +16,7 @@ import { useInput } from '../../hooks';
 import { Wrapper, Search } from './Navbar.style';
 
 export const Navbar = () => {
-	const role = useSelector(({ user }) => user.role);
+	const { role } = useSelector(useUser);
 	const isFirstRender = useRef(true);
 	const searchInput = useInput();
 	const { value } = searchInput;

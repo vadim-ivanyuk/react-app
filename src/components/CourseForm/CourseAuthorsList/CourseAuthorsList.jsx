@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
+import { useAuthors } from '../../../store/selectors';
+
 import { Button } from '../../Button';
 import { getAuthorsNamesById } from '../../../helpers';
 
@@ -9,7 +11,7 @@ import { CourseAuthors, Error } from './CourseAuthorsList.style';
 import { Title, Wrapper } from '../CourseForm.style';
 
 export const CourseAuthorsList = ({ setCourseAuthors, courseAuthors }) => {
-	const authors = useSelector(({ authors }) => authors);
+	const authors = useSelector(useAuthors);
 
 	const deleteCourseAuthor = (authorId) => () => {
 		setCourseAuthors(() =>

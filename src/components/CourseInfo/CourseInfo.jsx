@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
+import { useAuthors } from '../../store/selectors';
+
 import { BackLink } from '../BackLink';
 
 import {
@@ -21,7 +23,7 @@ import {
 
 export const CourseInfo = () => {
 	const [course, setCourse] = useState(null);
-	const authors = useSelector((store) => store.authors);
+	const authors = useSelector(useAuthors);
 	const { courseId } = useParams();
 
 	useEffect(() => {

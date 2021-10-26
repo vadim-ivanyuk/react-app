@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { deleteCourse } from '../../store/courses/courses.thunks';
+import { useStore } from '../../store/selectors';
 
 import { Button } from '../Button';
 
@@ -22,7 +23,7 @@ import {
 } from './CourseCard.style';
 
 export const CourseCard = ({ course }) => {
-	const { authors, user } = useSelector((store) => store);
+	const { authors, user } = useSelector(useStore);
 	const dispatch = useDispatch();
 	const courseAuthors = getAuthorsNamesById(course.authors, authors);
 	const courseDuration = convertDuration(course.duration);

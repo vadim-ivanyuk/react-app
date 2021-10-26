@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { deleteAuthor } from '../../../store/authors/authors.thunks';
+import { useAuthors } from '../../../store/selectors';
 
 import { Button } from '../../Button';
 
@@ -10,7 +11,7 @@ import { Authors } from './AuthorsList.style';
 import { Title, Wrapper } from '../CourseForm.style';
 
 export const AuthorsList = ({ setCourseAuthors, courseAuthors }) => {
-	const authors = useSelector(({ authors }) => authors);
+	const authors = useSelector(useAuthors);
 	const dispatch = useDispatch();
 
 	const addCourseAuthor = (authorId) => () => {
